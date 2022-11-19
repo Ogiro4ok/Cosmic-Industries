@@ -103,15 +103,15 @@ public class CosmicIndustriesBlocks {
         //storage
 
         coreHeart = new CoreBlock("coreHeart") {{
-            requirements(Category.effect, BuildVisibility.editorOnly, with( Items.graphite, 600, Items.lead, 800));
+            requirements(Category.effect, BuildVisibility.editorOnly, with( CosmicIndustriesItems.iron, 800, CosmicIndustriesItems.hematite, 1200));
             alwaysUnlocked = true;
 
             isFirstTier = true;
             unitType = CosmicIndustriesUnits.falcon;
-            health = 1000;
-            itemCapacity = 1000;
+            health = 2000;
+            itemCapacity = 3000;
             size = 4;
-            unitCapModifier = 6;
+            unitCapModifier = 8;
         }};
     }
 }
