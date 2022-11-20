@@ -13,6 +13,7 @@ import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.Floor;
+import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BuildVisibility;
 
@@ -28,6 +29,9 @@ public class CosmicIndustriesBlocks {
 
     //defense
     ironWall, ironWallLarge,
+
+    //drills
+    ironDrill,
 
     //storage
     coreHeart;
@@ -100,6 +104,16 @@ public class CosmicIndustriesBlocks {
             health = 260;
             requirements(Category.defense, with(CosmicIndustriesItems.iron,24));
         }};
+
+        //drills
+
+        ironDrill = new Drill("ironDrill") {{
+            requirements(Category.production, with(CosmicIndustriesItems.iron, 20));
+            tier = 2;
+            drillTime = 350;
+            size = 2;
+        }};
+
         //storage
 
         coreHeart = new CoreBlock("coreHeart") {{
