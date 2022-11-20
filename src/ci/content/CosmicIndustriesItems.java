@@ -18,5 +18,8 @@ public class CosmicIndustriesItems {
         lithium = new Item("lithium") {{
             explosiveness = 2;
         }};
+        noviaItems.addAll(
+        iron, hematite, lithium
+        );
     }
 }

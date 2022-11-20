@@ -4,18 +4,28 @@ import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
+import mindustry.entities.UnitSorts;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
+import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
+import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
+import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.draw.DrawDefault;
+import mindustry.world.draw.DrawFlame;
+import mindustry.world.draw.DrawMulti;
 import mindustry.world.meta.BuildVisibility;
+import mindustry.world.meta.Env;
 
 import static mindustry.type.ItemStack.with;
 
@@ -24,8 +34,11 @@ public class CosmicIndustriesBlocks {
     //environment
     hematiteOre, ironOre, duneSand,
 
+    //crafting
+    litiumSmelter,
+
     //turrets
-    shoker,
+    plasma, shoker,
 
     //defense
     ironWall, ironWallLarge,
@@ -54,15 +67,32 @@ public class CosmicIndustriesBlocks {
             variants = 2;
         }};
 
+        //crafting
+
+        litiumSmelter = new GenericCrafter("litiumSmelter"){{
+            requirements(Category.crafting, with(CosmicIndustriesItems.iron, 80));
+            craftTime = 70f;
+            size = 2;
+            hasPower = true;
+            hasLiquids = false;
+            consumeItems(with(Items.silicon, 2, CosmicIndustriesItems.iron, 1));
+            outputItem = new ItemStack(CosmicIndustriesItems.lithium, 2);
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffef84")));
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.09f;
+            craftEffect = Fx.smeltsmoke;
+            consumePower(0.80f);
+        }};
+
         //turrets
+
         shoker = new PowerTurret("shoker") {{
-        requirements(Category.turret, with(CosmicIndustriesItems.iron, 25));
+        requirements(Category.turret, with(CosmicIndustriesItems.iron, 50));
         shootType = new LightningBulletType(){{
             damage = 5;
             lightningLength = 10;
             collidesAir = true;
             ammoMultiplier = 1f;
-
             buildingDamageMultiplier = 0.25f;
 
             lightningType = new BulletType(0.0001f, 0f){{
@@ -88,9 +118,32 @@ public class CosmicIndustriesBlocks {
         size = 1;
         health = 260;
         shootSound = Sounds.spark;
-        consumePower(3.3f);
-        coolant = consumeCoolant(0.1f);
+        consumePower(0.4f);
     }};
+
+        plasma = new ContinuousTurret("plasma") {{
+            requirements(Category.turret, with(CosmicIndustriesItems.iron, 240, CosmicIndustriesItems.hematite, 120));
+            shootType = new PointLaserBulletType(){{
+                damage = 83f;
+                buildingDamageMultiplier = 0.3f;
+                hitColor = Color.valueOf("fda981");
+            }};
+            shootSound = Sounds.none;
+            loopSoundVolume = 1f;
+            loopSound = Sounds.laserbeam;
+            shootWarmupSpeed = 0.08f;
+            shootCone = 360f;
+            aimChangeSpeed = 999f;
+            rotateSpeed = 999f;
+            shootY = 0.1f;
+            outlineColor = Pal.darkOutline;
+            size = 3;
+            envEnabled |= Env.space;
+            range = 230f;
+            scaledHealth = 210;
+//            unitSort = UnitSorts.strongest;
+            consumePower(3.4f);
+        }};
 
         //defence
 
@@ -108,10 +161,11 @@ public class CosmicIndustriesBlocks {
         //drills
 
         ironDrill = new Drill("ironDrill") {{
-            requirements(Category.production, with(CosmicIndustriesItems.iron, 20));
+            requirements(Category.production, with(CosmicIndustriesItems.iron, 24));
             tier = 2;
             drillTime = 350;
             size = 2;
+            alwaysUnlocked = true;
         }};
 
         //storage

@@ -3,6 +3,7 @@ package ci.content;
 import arc.graphics.Color;
 import ci.planets.NoviaPlanetGenerator;
 import mindustry.Vars;
+import mindustry.content.Items;
 import mindustry.content.Planets;
 import mindustry.game.Team;
 import mindustry.graphics.g3d.HexMesh;
@@ -13,11 +14,13 @@ import mindustry.type.Planet;
 
 public class CosmicIndustriesPlanets {
     public static Planet
-            novia;
+    novia;
     public static void load(){
+        Planets.serpulo.hiddenItems.addAll(Vars.content.items()).removeAll(Items.serpuloItems);
+        Planets.erekir.hiddenItems.addAll(Vars.content.items()).removeAll(Items.erekirItems);
         novia = new Planet("novia", Planets.sun, 1f, 2){{
             defaultCore = CosmicIndustriesBlocks.coreHeart;
-            sectorSeed = 23;
+            sectorSeed = 8;
             generator = new NoviaPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
@@ -26,12 +29,12 @@ public class CosmicIndustriesPlanets {
             accessible = true;
             alwaysUnlocked = true;
             atmosphereColor = Color.valueOf("B79E54");
-            startSector = 12;
+            startSector = 32;
             atmosphereRadIn = 0.01f;
             atmosphereRadOut = 0.4f;
             clearSectorOnLose = true;
             ruleSetter = r -> {
-                r.loadout = ItemStack.list(CosmicIndustriesItems.hematite, 50);
+                r.loadout = ItemStack.list(CosmicIndustriesItems.iron, 40);
                 r.waveTeam = Team.blue;
                 r.attributes.clear();
                 r.showSpawns = true;
