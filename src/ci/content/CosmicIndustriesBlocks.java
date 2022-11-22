@@ -4,10 +4,11 @@ import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
-import mindustry.entities.UnitSorts;
+import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
+import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
@@ -15,6 +16,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ContinuousTurret;
+import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.Floor;
@@ -38,7 +40,7 @@ public class CosmicIndustriesBlocks {
     litiumSmelter,
 
     //turrets
-    plasma, shoker,
+    shoker, test, plasma,
 
     //defense
     ironWall, ironWallLarge,
@@ -121,8 +123,34 @@ public class CosmicIndustriesBlocks {
         consumePower(0.4f);
     }};
 
+        test = new ItemTurret("test") {{
+        requirements(Category.turret, with(CosmicIndustriesItems.iron, 170, CosmicIndustriesItems.hematite, 80));
+        ammo(
+        CosmicIndustriesItems.hematite,  new BasicBulletType(4.3f, 60){{
+            shoot = new ShootSpread(7, 6f);
+            shoot.shotDelay = 3;
+            height = 11f;
+            width = 10f;
+            lifetime = 73f;
+
+            }});
+
+            reload = 45f;
+            shootCone = 40f;
+            rotateSpeed = 1.20f;
+            targetAir = true;
+            targetGround = false;
+            range = 325f;
+            recoil = 1.3f;
+            size = 3;
+            health = 445;
+            ammoPerShot = 2;
+            shootSound = Sounds.artillery;
+            consumePower(0.5f);
+        }};
+
         plasma = new ContinuousTurret("plasma") {{
-            requirements(Category.turret, with(CosmicIndustriesItems.iron, 240, CosmicIndustriesItems.hematite, 120));
+            requirements(Category.turret, with(CosmicIndustriesItems.iron, 240, CosmicIndustriesItems.hematite, 120, CosmicIndustriesItems.lithium, 40));
             shootType = new PointLaserBulletType(){{
                 damage = 83f;
                 buildingDamageMultiplier = 0.3f;
@@ -141,7 +169,7 @@ public class CosmicIndustriesBlocks {
             envEnabled |= Env.space;
             range = 230f;
             scaledHealth = 210;
-//            unitSort = UnitSorts.strongest;
+            health = 570;
             consumePower(3.4f);
         }};
 
