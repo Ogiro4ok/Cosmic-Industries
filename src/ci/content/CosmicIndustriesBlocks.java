@@ -8,6 +8,7 @@ import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
+import mindustry.entities.part.RegionPart;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
@@ -26,6 +27,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawFlame;
 import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Env;
 
@@ -137,7 +139,7 @@ public class CosmicIndustriesBlocks {
 
             reload = 45f;
             shootCone = 40f;
-            rotateSpeed = 1.20f;
+            rotateSpeed = 3f;
             targetAir = true;
             targetGround = false;
             range = 325f;
@@ -147,6 +149,16 @@ public class CosmicIndustriesBlocks {
             ammoPerShot = 2;
             shootSound = Sounds.artillery;
             consumePower(0.5f);
+            shootY = 3;
+            drawer = new DrawTurret("reinforced-"){{
+                parts.add(new RegionPart("-front"){{
+                    progress = PartProgress.warmup;
+                    moveRot = -12f;
+                    mirror = true;
+                    moves.add(new PartMove(PartProgress.recoil, 0f, -3f, -6f));
+                }});
+            }};
+            limitRange();
         }};
 
         plasma = new ContinuousTurret("plasma") {{
