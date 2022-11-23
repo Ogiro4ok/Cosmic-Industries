@@ -146,7 +146,7 @@ public class CosmicIndustriesBlocks {
                             fragBullet = new BasicBulletType() {{
                                 damage = 15f;
                                 speed = 3.4f;
-                                lifetime = 36f;
+                                lifetime = 24f;
                                 pierceBuilding = true;
                                 width = 6f;
                                 height = 6f;
