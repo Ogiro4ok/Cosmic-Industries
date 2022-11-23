@@ -128,16 +128,16 @@ public class CosmicIndustriesBlocks {
         test = new ItemTurret("test") {{
         requirements(Category.turret, with(CosmicIndustriesItems.iron, 170, CosmicIndustriesItems.hematite, 80));
         ammo(
-        CosmicIndustriesItems.hematite,  new BasicBulletType(4.3f, 60){{
-            shoot = new ShootSpread(7, 6f);
+        CosmicIndustriesItems.hematite,  new BasicBulletType(4.3f, 105){{
+            shoot = new ShootSpread(12, 7f);
             shoot.shotDelay = 3;
-            height = 11f;
-            width = 10f;
+            height = 12f;
+            width = 11f;
             lifetime = 73f;
 
             }});
 
-            reload = 45f;
+            reload = 75f;
             shootCone = 40f;
             rotateSpeed = 3f;
             targetAir = true;
@@ -189,12 +189,12 @@ public class CosmicIndustriesBlocks {
 
         ironWall = new Wall("ironWall") {{
             size = 1;
-            health = 120;
+            health = 920;
             requirements(Category.defense, with(CosmicIndustriesItems.iron,6));
         }};
         ironWallLarge = new Wall("ironWallLarge") {{
             size = 2;
-            health = 260;
+            health = 1840;
             requirements(Category.defense, with(CosmicIndustriesItems.iron,24));
         }};
 
