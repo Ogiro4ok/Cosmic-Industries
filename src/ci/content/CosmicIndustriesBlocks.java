@@ -1,6 +1,7 @@
 package ci.content;
 
 import arc.graphics.Color;
+import arc.math.Interp;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
@@ -42,7 +43,7 @@ public class CosmicIndustriesBlocks {
     litiumSmelter,
 
     //turrets
-    shoker, test, plasma,
+    shoker, cidel, test, plasma,
 
     //defense
     ironWall, ironWallLarge,
@@ -91,7 +92,7 @@ public class CosmicIndustriesBlocks {
         //turrets
 
         shoker = new PowerTurret("shoker") {{
-        requirements(Category.turret, with(CosmicIndustriesItems.iron, 50));
+        requirements(Category.turret, with(CosmicIndustriesItems.iron, 25));
         shootType = new LightningBulletType(){{
             damage = 5;
             lightningLength = 10;
@@ -120,16 +121,63 @@ public class CosmicIndustriesBlocks {
         heatColor = Color.red;
         recoil = 1f;
         size = 1;
-        health = 260;
+        health = 80;
         shootSound = Sounds.spark;
         consumePower(0.4f);
     }};
+
+        cidel = new ItemTurret("cidel") {{
+            requirements(Category.turret, with(CosmicIndustriesItems.iron, 60));
+            health = 120;
+            rotateSpeed = 2.6f;
+            recoil = 0.6f;
+            size = 2;
+            range = 140;
+            reload = 125f;
+            ammo (
+                    CosmicIndustriesItems.iron, new BasicBulletType(4f, 40) {{
+                            lifetime = 32f;
+                            fragBullets = 16;
+                            fragVelocityMin = 0.9f;
+                            fragRandomSpread = 360;
+                            fragLifeMin = 1.1f;
+                            width = 11;
+                            height = 11;
+                            fragBullet = new BasicBulletType() {{
+                                damage = 15f;
+                                speed = 3.4f;
+                                lifetime = 36f;
+                                pierceBuilding = true;
+                                width = 6f;
+                                height = 6f;
+                            }};
+                        }});
+            drawer = new DrawTurret("reinforced-"){
+                {
+                    parts.addAll(
+                            new RegionPart("-barrel") {{
+                                progress = PartProgress.recoil.curve(Interp.pow2In);
+                                moveY = -5f * 4f / 4f;
+                                heatColor = Color.valueOf("f03b0e");
+                                mirror = false;
+                            }},
+                            new RegionPart("-front") {{
+                                heatProgress = PartProgress.warmup;
+                                progress = PartProgress.warmup;
+                                mirror = true;
+                                moveX = 2f * 4f / 3f;
+                                moveY = -0.5f;
+                                moveRot = -40f;
+                                under = true;
+                            }});
+                }};
+        }};
 
         test = new ItemTurret("test") {{
         requirements(Category.turret, with(CosmicIndustriesItems.iron, 170, CosmicIndustriesItems.hematite, 80));
         ammo(
         CosmicIndustriesItems.hematite,  new BasicBulletType(4.3f, 105){{
-            shoot = new ShootSpread(12, 7f);
+            shoot = new ShootSpread(13, 4f);
             shoot.shotDelay = 3;
             height = 12f;
             width = 11f;
@@ -137,7 +185,7 @@ public class CosmicIndustriesBlocks {
 
             }});
 
-            reload = 75f;
+            reload = 65f;
             shootCone = 40f;
             rotateSpeed = 3f;
             targetAir = true;
