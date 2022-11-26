@@ -11,14 +11,13 @@ import mindustry.ai.*;
 import mindustry.ai.Astar.*;
 import mindustry.content.*;
 import mindustry.game.*;
-import mindustry.graphics.g3d.PlanetGrid.*;
 import mindustry.maps.generators.*;
 import mindustry.type.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
 public class NoviaPlanetGenerator extends PlanetGenerator {
-
+    public float heightPow = 3f, heightMult = 1.6f;
     String launchSchem = "bXNjaAF4nGNgYWBhZmDJS8xNZWDUY+BOSS1OLsosKMnMz2NgYGDLSUxKzSlmYIqOZWTgSc7UTc4vSvVITSwqAUoyghCQAAD77w5o";
 
     NoviaBase basegen = new NoviaBase();
@@ -27,7 +26,6 @@ public class NoviaPlanetGenerator extends PlanetGenerator {
 
     public Block[] arr = {
             Blocks.grass,
-//            Blocks.water,
             Blocks.grass,
             Blocks.water,
             CosmicIndustriesBlocks.duneSand,
@@ -58,41 +56,18 @@ public class NoviaPlanetGenerator extends PlanetGenerator {
     }
 
     @Override
-    public float getHeight(Vec3 pos) {
-        return Math.max(0.1f, rawHeight(pos));
+    public void generateSector(Sector sector){
+        //no bases
     }
 
     @Override
-    public void generateSector(Sector sector) {
-/**        if (sector.id == 226 || sector.id == 12) {
-            sector.generateEnemyBase = true;
-            return;
-        }*/
-        Ptile tile = sector.tile;
+    public boolean allowLanding(Sector sector){
+        return false;
+    }
 
-        boolean any = false;
-        float poles = Math.abs(tile.v.y);
-        float noise = Noise.snoise3(tile.v.x, tile.v.y, tile.v.z, 0.001f, 0.6f);
-
-        if (noise + poles / 7.2 > 0.12 && poles > 0.23) {
-            any = true;
-        }
-        if (noise < 0.17) {
-            for (Ptile other : tile.tiles) {
-                var osec = sector.planet.getSector(other);
-
-                //no sectors near start sector!
-                if (
-                        osec.id == sector.planet.startSector || //near starting sector
-                                osec.generateEnemyBase && poles < 0.85 || //near other base
-                                (sector.preset != null && noise < 0.11) //near preset
-                ) {
-                    return;
-                }
-            }
-        }
-
-        sector.generateEnemyBase = any;
+    @Override
+    public float getHeight(Vec3 position){
+        return Mathf.pow(rawHeight(position), heightPow) * heightMult;
     }
 
     @Override

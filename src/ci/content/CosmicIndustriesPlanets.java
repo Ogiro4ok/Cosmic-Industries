@@ -22,7 +22,7 @@ public class CosmicIndustriesPlanets {
             defaultCore = CosmicIndustriesBlocks.coreHeart;
             sectorSeed = 8;
             generator = new NoviaPlanetGenerator();
-            meshLoader = () -> new HexMesh(this, 6);
+            meshLoader = () -> new HexMesh(this, 5);
             cloudMeshLoader = () -> new MultiMesh(
                     new HexSkyMesh(this, 6, 0.1f, 0.23f, 5, Color.valueOf("FFFFFF").a(0.75f), 2, 0.45f, 1.13f, 0.45f),
                     new HexSkyMesh(this, 3, 0.2f, 0.19f, 5, Color.valueOf("FFFFFF").a(0.65f), 3, 0.25f, 1.22f, 0.45f));
