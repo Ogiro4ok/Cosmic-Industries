@@ -54,8 +54,7 @@ public class CosmicIndustriesBlocks {
     //storage
     coreHeart;
 
-    public static void load() {
-
+    public static void load () {
         //environment
         ironOre= new OreBlock(CosmicIndustriesItems.iron) {{
             oreDefault = true;
@@ -124,6 +123,7 @@ public class CosmicIndustriesBlocks {
         health = 80;
         shootSound = Sounds.spark;
         consumePower(0.4f);
+            drawer = new DrawTurret("novia-");
     }};
 
         cidel = new ItemTurret("cidel") {{
@@ -152,7 +152,7 @@ public class CosmicIndustriesBlocks {
                                 height = 6f;
                             }};
                         }});
-            drawer = new DrawTurret("reinforced-"){
+            drawer = new DrawTurret("novia-"){
                 {
                     parts.addAll(
                             new RegionPart("-barrel") {{
@@ -198,7 +198,7 @@ public class CosmicIndustriesBlocks {
             shootSound = Sounds.artillery;
             consumePower(0.5f);
             shootY = 3;
-            drawer = new DrawTurret("reinforced-"){{
+            drawer = new DrawTurret("novia-"){{
                 parts.add(new RegionPart("-front"){{
                     progress = PartProgress.warmup;
                     moveRot = -12f;
@@ -231,6 +231,7 @@ public class CosmicIndustriesBlocks {
             scaledHealth = 210;
             health = 570;
             consumePower(3.4f);
+            drawer = new DrawTurret("novia-");
         }};
 
         //defence
