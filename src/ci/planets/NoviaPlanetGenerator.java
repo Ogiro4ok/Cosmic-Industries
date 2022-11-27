@@ -210,7 +210,6 @@ public class NoviaPlanetGenerator extends PlanetGenerator {
             float offsetX = x - 4, offsetY = y + 23;
             for (int i = ores.size - 1; i >= 0; i--) {
                 Block entry = ores.get(i);
-//                float freq = frequencies.get(i);
                 if (Math.abs(0.5 - noise(offsetX, offsetY + i * 999, 2, 0.7f, (40 + i * 2))) > 0.22f + i * 0.01 &&
                         Math.abs(0.5 - noise(offsetX, offsetY - i * 999, 1, 1, (30 + i * 4))) > 0.35f ) {
                     ore = entry;
@@ -219,16 +218,6 @@ public class NoviaPlanetGenerator extends PlanetGenerator {
             }
         });
 
-		/**old ore system
-		pass((x, y) -> {
-			if (noise(x, y, 2, 0.3f, 30f, 1f) > 0.85f * poles && block == Blocks.air) ore = DecalingBlocks.oreFragment;
-
-			if (noise(x, y, 3, 0.3f, 20f, 1f) > 0.75f * poles && block == Blocks.air) ore = DecalingBlocks.oreMateria;
-
-			if (noise(x, y, 3, 0.2f, 20f, 1f) > 1.1f * poles && block == Blocks.air) ore = Blocks.air;
-		});*/
-
-        // put core and enemy spawn in the map
         Room spawn = null;
         Seq<Room> enemies = new Seq<>();
         int enemySpawns = rand.random(1, Math.max(Mathf.floor(sector.threat * 4), 1));
@@ -274,10 +263,10 @@ public class NoviaPlanetGenerator extends PlanetGenerator {
         state.rules.env = sector.planet.defaultEnv;
     }
 
-    @Override
+/**    @Override
     public Schematic getDefaultLoadout() {
         return Schematics.readBase64(launchSchem);
-    }
+    }*/
 
     @Override
     public void postGenerate(Tiles tiles) {
