@@ -1,27 +1,19 @@
 package ci.content;
 
 import arc.graphics.Color;
-import arc.math.geom.Mat3D;
-import arc.util.Tmp;
 import ci.planets.NoviaPlanetGenerator;
 import ci.planets.OctaviaPlanetGenerator;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Planets;
 import mindustry.game.Team;
 import mindustry.graphics.g3d.*;
-import mindustry.maps.planet.AsteroidGenerator;
 import mindustry.type.ItemStack;
 import mindustry.type.Planet;
-import mindustry.type.Sector;
-import mindustry.world.meta.Env;
-
-import static mindustry.entities.TargetPriority.base;
 
 public class CosmicIndustriesPlanets {
     public static Planet
-            plumia, novia, octavia, quantix;
+            plumia, novia, octavia;
 
     public static void load() {
         Planets.serpulo.hiddenItems.addAll(Vars.content.items()).removeAll(Items.serpuloItems);
@@ -33,12 +25,12 @@ public class CosmicIndustriesPlanets {
                     this, 4,
                     5, 0.3, 1.7, 1.2, 1,
                     1.1f,
-                    Color.valueOf("61d8d9"),
-                    Color.valueOf("00baff"),
-                    Color.valueOf("d1f3ff"),
-                    Color.valueOf("84cde9"),
-                    Color.valueOf("52b9df"),
-                    Color.valueOf("0ca2da")
+                    Color.valueOf("F7F092"),
+                    Color.valueOf("FCF36D"),
+                    Color.valueOf("F3E73B"),
+                    Color.valueOf("F9EB28"),
+                    Color.valueOf("E3D51B"),
+                    Color.valueOf("CABD09")
             );
             bloom = true;
             drawOrbit = false;
@@ -62,6 +54,7 @@ public class CosmicIndustriesPlanets {
             atmosphereRadIn = 0.01f;
             atmosphereRadOut = 0.4f;
             clearSectorOnLose = true;
+            orbitRadius = 96;
             ruleSetter = r -> {
                 r.loadout = ItemStack.list(CosmicIndustriesItems.iron, 40);
                 r.waveTeam = Team.blue;
@@ -75,7 +68,7 @@ public class CosmicIndustriesPlanets {
         }};
 
         octavia = new Planet("octavia", CosmicIndustriesPlanets.plumia, 1f, 2) {{
-            defaultCore = CosmicIndustriesBlocks.coreHeart;
+            defaultCore = CosmicIndustriesBlocks.corePixel;
             sectorSeed = 55;
             generator = new OctaviaPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 5);
@@ -92,15 +85,15 @@ public class CosmicIndustriesPlanets {
             clearSectorOnLose = true;
             orbitRadius = 64;
             ruleSetter = r -> {
-                r.loadout = ItemStack.list(CosmicIndustriesItems.iron, 40);
+                r.loadout = ItemStack.list(CosmicIndustriesItems.magnesium, 160);
                 r.waveTeam = Team.green;
                 r.attributes.clear();
                 r.showSpawns = true;
                 r.fog = false;
                 r.onlyDepositCore = false;
             };
-            unlockedOnLand.add(CosmicIndustriesBlocks.coreHeart);
-            hiddenItems.addAll(Vars.content.items()).removeAll(CosmicIndustriesItems.noviaItems);
+            unlockedOnLand.add(CosmicIndustriesBlocks.corePixel);
+            hiddenItems.addAll(Vars.content.items()).removeAll(CosmicIndustriesItems.octaviaItems);
 
         }};
 

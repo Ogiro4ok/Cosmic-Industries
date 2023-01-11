@@ -18,7 +18,7 @@ import mindustry.world.*;
 import static mindustry.Vars.*;
 public class OctaviaPlanetGenerator extends PlanetGenerator {
     public float heightPow = 3f, heightMult = 1.6f;
-    String launchSchem = "bXNjaAF4nGNgYWBhZmDJS8xNZWDUY+BOSS1OLsosKMnMz2NgYGDLSUxKzSlmYIqOZWTgSc7UTc4vSvVITSwqAUoyghCQAAD77w5o";
+    String launchSchem = "bXNjaAF4nGNgYmBiZmDJS8xNZWANyKxIzWHgTkktTi7KLCjJzM9jYGBgy0lMSs0pZmCKjmVk4EnO1E3OL0qFqGRgYGSAAABqExBI";
 
     NoviaBase basegen = new NoviaBase();
     public static final int seed = 9;
@@ -30,7 +30,7 @@ public class OctaviaPlanetGenerator extends PlanetGenerator {
             CosmicIndustriesBlocks.echugalite,
             CosmicIndustriesBlocks.lechugate,
             CosmicIndustriesBlocks.lechugate,
-            CosmicIndustriesBlocks.echugalite,
+            CosmicIndustriesBlocks.lechugateWater,
 
     };
     ObjectMap<Block, Block> dec = ObjectMap.of(

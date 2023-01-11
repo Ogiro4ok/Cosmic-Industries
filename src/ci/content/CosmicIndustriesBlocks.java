@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import arc.math.Interp;
 import mindustry.content.Fx;
 import mindustry.content.Items;
+import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.BulletType;
@@ -21,12 +22,16 @@ import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.distribution.Duct;
-import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.Router;
 import mindustry.world.blocks.environment.*;
+import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.power.ConsumeGenerator;
+import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.production.Pump;
+import mindustry.world.blocks.production.WallCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawFlame;
@@ -35,32 +40,45 @@ import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Env;
 
+import static mindustry.content.Fx.smeltsmoke;
 import static mindustry.type.ItemStack.with;
 
 public class CosmicIndustriesBlocks {
     public static Block
 
-            //distribution
-            magnesiumDuct, magnesiumJunction, magnesiumRouter,
+    //distribution
+    magnesiumDuct, magnesiumJunction, magnesiumRouter,
 
-            //environment
-            hematiteOre, ironOre, duneSand,
-            chugalitra, chugalitraBoulder, chugalitraWall, chugalitraWater, echugalite, echugaliteWall, echugaliteWater, lechugate, lechugateBoulder, lechugateWall, lechugateWater, magnesium,
+    //environment
+    hematiteOre, ironOre, duneSand,
+    chugalitra, chugalitraBoulder, chugalitraWall, chugalitraWater, echugalite, echugaliteWall, echugaliteWater, lechugate, lechugateBoulder, lechugateWall, lechugateWater, magnesium,
 
-            //crafting
-            litiumSmelter,
+    //liquid
+    magnesiumConduit, magnesiumPump,
 
-            //turrets
-            shoker, cidel, test, plasma, trident,
+    //power
+    magnesiumNode, magneticEnergySeparator,
 
-            //defense
-            ironWall, ironWallLarge,
+    //production
 
-            //drills
-            ironDrill,
+    miniDrill, miniMiller,
 
-            //storage
-            coreHeart, corePixel;
+    //crafting
+    litiumSmelter,
+    misuneseSmelter,
+
+    //turrets
+    shoker, cidel, test, plasma, trident,
+    dissecter, salvx,
+
+    //defense
+    ironWall, ironWallLarge,
+
+    //drills
+    ironDrill,
+
+    //storage
+    coreHeart, corePixel;
     public static void load () {
 
         //distribution
@@ -159,6 +177,69 @@ public class CosmicIndustriesBlocks {
             variants = 3;
         }};
 
+        //liquid
+        magnesiumConduit = new Conduit("magnesiumConduit"){{
+            requirements(Category.liquid, with(CosmicIndustriesItems.magnesium, 4));
+            leaks = true;
+            health = 10;
+            liquidCapacity = 5;
+            liquidPressure = 2;
+            placeableLiquid = true;
+        }};
+
+        magnesiumPump = new Pump("magnesiumPump"){{
+           size = 1;
+           pumpAmount = 0.05f;
+           squareSprite = false;
+           placeableLiquid = true;
+           liquidCapacity = 5;
+        }};
+
+        //power
+
+        magnesiumNode = new PowerNode("magnesiumNode"){{
+            requirements(Category.power, with(CosmicIndustriesItems.magnesium, 10));
+            health = 10;
+            baseExplosiveness = 2;
+            laserRange = 5;
+            hasPower = true;
+            outputsPower = true;
+            laserColor1 = Color.valueOf("a488eb");
+            laserColor2 = Color.valueOf("5c5e9e");
+            maxNodes = 5;
+            consumePowerBuffered(750f);
+        }};
+
+        magneticEnergySeparator = new ConsumeGenerator("magneticEnergySeparator"){{
+            size = 2;
+            powerProduction = 1;
+            //TODO fix
+        }};
+
+        //production
+
+        miniDrill = new Drill("miniDrill"){{
+            requirements(Category.production, with(CosmicIndustriesItems.magnesium, 10));
+            size = 1;
+            health = 15;
+            drillTime = 500;
+            tier = 1;
+            rotateSpeed = 2;
+            researchCostMultiplier = 0.1f;
+            liquidCapacity = 25;
+            consumeLiquid(Liquids.water, 0.3f).boost();
+        }};
+
+        miniMiller = new WallCrafter("miniMiller"){{
+            requirements(Category.production, with(CosmicIndustriesItems.magnesium, 15));
+            size = 1;
+            health = 20;
+            drillTime = 420;
+            attribute = attribute.sand;
+            rotateSpeed = 2;
+            consumePower(0.08f);
+        }};
+
         //crafting
 
         litiumSmelter = new GenericCrafter("litiumSmelter"){{
@@ -172,8 +253,25 @@ public class CosmicIndustriesBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffef84")));
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.09f;
-            craftEffect = Fx.smeltsmoke;
+            craftEffect = smeltsmoke;
             consumePower(0.80f);
+        }};
+
+        misuneseSmelter = new GenericCrafter("misuneseSmelter"){{
+            requirements(Category.crafting, with(CosmicIndustriesItems.magnesium, 80));
+            craftEffect = smeltsmoke;
+            outputItem = new ItemStack(CosmicIndustriesItems.misunese, 1);
+            craftTime = 150;
+            size = 1;
+            hasPower = true;
+
+            //todo drawers
+
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.15f;
+
+            consumePower(0.33f);
+            consumeItems(with(CosmicIndustriesItems.magnesium, 1, Items.sand, 4));
         }};
 
         //turrets
@@ -357,6 +455,18 @@ public class CosmicIndustriesBlocks {
             limitRange();
         }};
 
+        dissecter = new ItemTurret("dissecter"){{
+            reload = 40;
+            shootCone = 5;
+            rotateSpeed = 1.5f;
+            targetGround = true;
+            targetAir = true;
+            range = 250;
+            recoil = 1.5f;
+            size = 3;
+        }};
+
+
         //defence
 
         ironWall = new Wall("ironWall") {{
@@ -395,7 +505,7 @@ public class CosmicIndustriesBlocks {
         }};
 
         corePixel = new CoreBlock("corePixel"){{
-            requirements(Category.effect, BuildVisibility.editorOnly, with( CosmicIndustriesItems.iron, 500));
+            requirements(Category.effect, BuildVisibility.editorOnly, with( CosmicIndustriesItems.magnesium, 500));
             alwaysUnlocked = true;
 
             isFirstTier = true;
