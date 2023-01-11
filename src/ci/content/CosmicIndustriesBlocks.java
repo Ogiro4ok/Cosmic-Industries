@@ -20,8 +20,11 @@ import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ContinuousTurret;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
-import mindustry.world.blocks.environment.OreBlock;
-import mindustry.world.blocks.environment.Floor;
+import mindustry.world.blocks.distribution.Duct;
+import mindustry.world.blocks.distribution.DuctRouter;
+import mindustry.world.blocks.distribution.Junction;
+import mindustry.world.blocks.distribution.Router;
+import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
@@ -36,39 +39,124 @@ import static mindustry.type.ItemStack.with;
 
 public class CosmicIndustriesBlocks {
     public static Block
-    //environment
-    hematiteOre, ironOre, duneSand,
 
-    //crafting
-    litiumSmelter,
+            //distribution
+            magnesiumDuct, magnesiumJunction, magnesiumRouter,
 
-    //turrets
-    shoker, cidel, test, plasma,
+            //environment
+            hematiteOre, ironOre, duneSand,
+            chugalitra, chugalitraBoulder, chugalitraWall, chugalitraWater, echugalite, echugaliteWall, echugaliteWater, lechugate, lechugateBoulder, lechugateWall, lechugateWater, magnesium,
 
-    //defense
-    ironWall, ironWallLarge,
+            //crafting
+            litiumSmelter,
 
-    //drills
-    ironDrill,
+            //turrets
+            shoker, cidel, test, plasma, trident,
 
-    //storage
-    coreHeart;
+            //defense
+            ironWall, ironWallLarge,
 
+            //drills
+            ironDrill,
+
+            //storage
+            coreHeart, corePixel;
     public static void load () {
+
+        //distribution
+        magnesiumDuct = new Duct("magnesiumDuct"){{
+            requirements(Category.distribution, with(CosmicIndustriesItems.magnesium, 1));
+            health = 2;
+            speed = 3.6f;
+            researchCost = with(CosmicIndustriesItems.magnesium, 5);
+        }};
+
+        magnesiumJunction = new Junction("magnesiumJunction"){{
+            requirements(Category.distribution, with(CosmicIndustriesItems.magnesium, 2));
+            speed = 3;
+            capacity = 4;
+            health = 5;
+            buildCostMultiplier = 6f;
+        }};
+
+        magnesiumRouter = new Router("magnesiumRouter"){{
+            requirements(Category.distribution, with(CosmicIndustriesItems.magnesium, 3));
+            health = 5;
+            speed = 3f;
+            regionRotated1 = 1;
+            solid = false;
+            researchCost = with(CosmicIndustriesItems.magnesium, 30);
+        }};
+
         //environment
-        ironOre= new OreBlock(CosmicIndustriesItems.iron) {{
+        ironOre = new OreBlock(CosmicIndustriesItems.iron) {{
             oreDefault = true;
             oreThreshold = 0.81f;
             oreScale = 23.47619f;
+            variants = 3;
         }};
-        hematiteOre= new OreBlock(CosmicIndustriesItems.hematite) {{
+        hematiteOre = new OreBlock(CosmicIndustriesItems.hematite) {{
             oreDefault = true;
             oreThreshold = 0.93f;
             oreScale = 21.42365f;
+            variants = 3;
         }};
 
         duneSand = new Floor("duneSand") {{
             variants = 2;
+        }};
+
+        chugalitra = new Floor("chugalitra") {{
+            variants = 3;
+            itemDrop = Items.sand;
+        }};
+
+        chugalitraBoulder = new Prop("chugalitraBoulder"){{
+           variants = 3;
+           chugalitra.asFloor().decoration = this;
+        }};
+
+        chugalitraWall = new StaticWall("chugalitraWall"){{
+           variants = 3;
+        }};
+
+        chugalitraWater = new ShallowLiquid("chugalitraWater"){{
+           variants = 3;
+        }};
+
+        echugalite = new Floor("echugalite"){{
+            variants = 3;
+        }};
+
+        echugaliteWall = new StaticWall("echugaliteWall"){{
+            variants = 3;
+        }};
+
+        echugaliteWater = new ShallowLiquid("echugaliteWater"){{
+            variants = 3;
+        }};
+
+        lechugate = new Floor("lechugate"){{
+           variants = 3;
+        }};
+
+        lechugateWall = new StaticWall("lechugateWall"){{
+            variants = 3;
+        }};
+
+        lechugateBoulder = new Prop("lechugateBoulder"){{
+            variants = 3;
+        }};
+
+        lechugateWater = new ShallowLiquid("lechugateWater"){{
+           variants = 3;
+        }};
+
+        magnesium = new OreBlock(CosmicIndustriesItems.magnesium){{
+            oreDefault = true;
+            oreThreshold = 0.51f;
+            oreScale = 21.47619f;
+            variants = 3;
         }};
 
         //crafting
@@ -234,6 +322,41 @@ public class CosmicIndustriesBlocks {
             drawer = new DrawTurret("novia-");
         }};
 
+        trident = new ItemTurret("trident"){{
+            requirements(Category.turret, with(CosmicIndustriesItems.iron, 160, CosmicIndustriesItems.lithium, 200));
+            ammo(
+                    CosmicIndustriesItems.iron,  new BasicBulletType(5f, 40){{
+                        height = 9f;
+                        width = 7f;
+                        lifetime = 64;
+                        inaccuracy = 5;
+                    }});
+
+            reload = 360f;
+            shootCone = 40f;
+            rotateSpeed = 3.7f;
+            targetAir = true;
+            targetGround = false;
+            range = 400f;
+            recoil = 2f;
+            size = 3;
+            health = 420;
+            ammoPerShot = 1;
+            shootSound = Sounds.artillery;
+            shootY = 2;
+            shoot.shots = 16;
+            shoot.shotDelay = 6f;
+            drawer = new DrawTurret("novia-"){{
+                parts.add(new RegionPart("-front"){{
+                    progress = PartProgress.warmup;
+                    moveRot = -6f;
+                    mirror = true;
+                    moves.add(new PartMove(PartProgress.recoil, 0f, 3f, -3f));
+                }});
+            }};
+            limitRange();
+        }};
+
         //defence
 
         ironWall = new Wall("ironWall") {{
@@ -269,6 +392,18 @@ public class CosmicIndustriesBlocks {
             itemCapacity = 3000;
             size = 4;
             unitCapModifier = 8;
+        }};
+
+        corePixel = new CoreBlock("corePixel"){{
+            requirements(Category.effect, BuildVisibility.editorOnly, with( CosmicIndustriesItems.iron, 500));
+            alwaysUnlocked = true;
+
+            isFirstTier = true;
+            unitType = CosmicIndustriesUnits.hawk;
+            health = 250;
+            itemCapacity = 500;
+            size = 2;
+            unitCapModifier = 4;
         }};
     }
 }
