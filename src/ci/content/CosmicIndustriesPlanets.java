@@ -73,8 +73,8 @@ public class CosmicIndustriesPlanets {
             generator = new OctaviaPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 5);
             cloudMeshLoader = () -> new MultiMesh(
-                    new HexSkyMesh(this, 6, 0.1f, 0.23f, 5, Color.valueOf("FFFFFF").a(0.75f), 2, 0.45f, 1.13f, 0.45f),
-                    new HexSkyMesh(this, 3, 0.2f, 0.19f, 5, Color.valueOf("FFFFFF").a(0.65f), 3, 0.25f, 1.22f, 0.45f));
+                    new HexSkyMesh(this, 6, 0.1f, 0.23f, 5, Color.valueOf("384f27").a(0.75f), 2, 0.45f, 1.13f, 0.45f),
+                    new HexSkyMesh(this, 3, 0.2f, 0.19f, 5, Color.valueOf("546e3b").a(0.65f), 3, 0.25f, 1.22f, 0.45f));
             solarSystem = plumia;
             accessible = true;
             alwaysUnlocked = true;
