@@ -29,13 +29,11 @@ public class OctaviaPlanetGenerator extends PlanetGenerator {
             CosmicIndustriesBlocks.chugalitra,
             CosmicIndustriesBlocks.chugalitra,
             CosmicIndustriesBlocks.chugalitra,
-            CosmicIndustriesBlocks.chugalitra,
-            CosmicIndustriesBlocks.chugalitra,
+            CosmicIndustriesBlocks.lechugate,
+            CosmicIndustriesBlocks.lechugate,
+            CosmicIndustriesBlocks.lechugateWater,
+            CosmicIndustriesBlocks.lechugateWater,
             CosmicIndustriesBlocks.echugalite,
-            CosmicIndustriesBlocks.lechugate,
-            CosmicIndustriesBlocks.lechugate,
-            CosmicIndustriesBlocks.lechugateWater,
-            CosmicIndustriesBlocks.lechugateWater,
 
     };
     ObjectMap<Block, Block> dec = ObjectMap.of(
