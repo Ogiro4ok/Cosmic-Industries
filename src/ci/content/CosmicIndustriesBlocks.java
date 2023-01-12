@@ -1,15 +1,13 @@
 package ci.content;
 
 import arc.graphics.Color;
+import arc.graphics.Colors;
 import arc.math.Interp;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
-import mindustry.entities.bullet.BasicBulletType;
-import mindustry.entities.bullet.BulletType;
-import mindustry.entities.bullet.LightningBulletType;
-import mindustry.entities.bullet.PointLaserBulletType;
+import mindustry.entities.bullet.*;
 import mindustry.entities.part.RegionPart;
 import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
@@ -37,10 +35,13 @@ import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawFlame;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawTurret;
+import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Env;
 
+import static mindustry.content.Fx.lightning;
 import static mindustry.content.Fx.smeltsmoke;
+import static mindustry.gen.Sounds.none;
 import static mindustry.type.ItemStack.with;
 
 public class CosmicIndustriesBlocks {
@@ -235,7 +236,7 @@ public class CosmicIndustriesBlocks {
             size = 1;
             health = 20;
             drillTime = 420;
-            attribute = attribute.sand;
+            attribute = Attribute.sand;
             rotateSpeed = 2;
             consumePower(0.08f);
         }};
@@ -402,7 +403,7 @@ public class CosmicIndustriesBlocks {
                 buildingDamageMultiplier = 0.3f;
                 hitColor = Color.valueOf("fda981");
             }};
-            shootSound = Sounds.none;
+            shootSound = none;
             loopSoundVolume = 1f;
             loopSound = Sounds.laserbeam;
             shootWarmupSpeed = 0.08f;
@@ -456,7 +457,16 @@ public class CosmicIndustriesBlocks {
         }};
 
         dissecter = new ItemTurret("dissecter"){{
-            reload = 40;
+            requirements(Category.turret, with(CosmicIndustriesItems.magnesium, 45));
+
+            ammo(
+                    CosmicIndustriesItems.magnesium,  new BasicBulletType(6f, 55){{
+                        height = 80f;
+                        width = 38f;
+                        lifetime = 40;
+                        sprite = "sword";
+                    }});
+
             shootCone = 5;
             rotateSpeed = 1.5f;
             targetGround = true;
@@ -464,6 +474,27 @@ public class CosmicIndustriesBlocks {
             range = 250;
             recoil = 1.5f;
             size = 3;
+            health = 35;
+            ammoPerShot = 1;
+            outlineColor = Color.valueOf("000000");
+
+            //TODO shoot sound
+            shootSound = Sounds.artillery;
+            shootY = 0;
+            heatColor = Color.valueOf("a488eb");
+            shake = 5;
+            hasPower = true;
+
+            drawer = new DrawTurret("octavia-"){{
+                parts.add(new RegionPart("-front"){{
+                    progress = PartProgress.warmup;
+                    moveRot = -12f;
+                    mirror = true;
+                    moves.add(new PartMove(PartProgress.recoil, 0f, -3f, -6f));
+                }});
+            }};
+            limitRange();
+
         }};
 
 
