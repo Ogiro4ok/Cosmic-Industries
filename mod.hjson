@@ -1,8 +1,8 @@
 displayName: "CosmicIndustries"
 name: "ci"
-author: "sus"
+author: "CI-team"
 main: "ci.CosmicIndustries"
-description: "amogus"
+description: "New planets."
 version: 0.1
 minGameVersion: 139
 java: true

@@ -195,16 +195,13 @@ public class OctaviaPlanetGenerator extends PlanetGenerator {
 
 
         // ores
-        Seq<Block> ores = Seq.with(CosmicIndustriesBlocks.ironOre, CosmicIndustriesBlocks.hematiteOre);
+        Seq<Block> ores = Seq.with(CosmicIndustriesBlocks.magnesiumOre);
         float poles = 1f - Math.abs(sector.tile.v.y);
         float nmag = 0.5f;
         float scl = 1f;
         float addscl = 1.3f;
-        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.3f*addscl){
-            ores.add(CosmicIndustriesBlocks.ironOre);
-        }
-        if(Simplex.noise3d(seed, 2, 0.5, scl, sector.tile.v.x, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.25f*addscl){
-            ores.add(CosmicIndustriesBlocks.hematiteOre);
+        if(Simplex.noise3d(seed, 2, 0.6, scl, sector.tile.v.x, sector.tile.v.y, sector.tile.v.z)*nmag + poles > 0.1f*addscl){
+            ores.add(CosmicIndustriesBlocks.magnesiumOre);
         }
 
 

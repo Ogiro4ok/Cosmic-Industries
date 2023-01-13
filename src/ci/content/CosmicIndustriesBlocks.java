@@ -6,7 +6,6 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
-import mindustry.entities.Effect;
 import mindustry.entities.bullet.*;
 import mindustry.entities.part.RegionPart;
 import mindustry.entities.pattern.ShootSpread;
@@ -50,7 +49,7 @@ public class CosmicIndustriesBlocks {
 
     //environment
     hematiteOre, ironOre, duneSand,
-    chugalitra, chugalitraBoulder, chugalitraWall, chugalitraWater, echugalite, echugaliteWall, echugaliteWater, lechugate, lechugateBoulder, lechugateWall, lechugateWater, magnesium,
+    chugalitra, chugalitraBoulder, chugalitraWall, chugalitraWater, echugalite, echugaliteWall, echugaliteWater, lechugate, lechugateBoulder, lechugateWall, lechugateWater, magnesiumOre,
 
     //liquid
     magnesiumConduit, magnesiumPump,
@@ -182,7 +181,7 @@ public class CosmicIndustriesBlocks {
             supportsOverlay = true;
         }};
 
-        magnesium = new OreBlock(CosmicIndustriesItems.magnesium){{
+        magnesiumOre = new OreBlock(CosmicIndustriesItems.magnesium){{
             oreDefault = true;
             oreThreshold = 0.51f;
             oreScale = 21.47619f;
@@ -472,10 +471,6 @@ public class CosmicIndustriesBlocks {
             ammo(
                     CosmicIndustriesItems.magnesium,  new MissileBulletType(6f, 112){{
                         consumePower(10f);
-                        /**shootEffect = Fx.instShoot;
-                        hitEffect = Fx.instHit;
-                        smokeEffect = Fx.smokeCloud;
-                        trailEffect = Fx.instTrail;*/
                         despawnEffect = Fx.instBomb;
                         height = 80f;
                         width = 38f;
